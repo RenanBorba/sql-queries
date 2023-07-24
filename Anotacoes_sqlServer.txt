@@ -1,6 +1,4 @@
 -- SELECT
--- SQL Server, Postgre, Oracle, mySQL
-
 
 Selecionar colunas da tabela:
 
@@ -119,7 +117,7 @@ Funções de agregação basicamente agregam
  
 ---------------------------------------------------------------------------
 
--- 	GROUP BY
+-- GROUP BY
 
 Divide o resultado da sua pesquisa em grupos
  Para cada grupo você pode aplicar uma função de agregação (sub-query):
@@ -148,7 +146,7 @@ HAVING condicao;
 
 ---------------------------------------------------------------------------
 
---  AS
+-- AS
 
 Renomear as colunas = Alias
 
