@@ -1,5 +1,3 @@
-Curso: https://www.youtube.com/watch?v=G7bMwefn8RQ
-
 -- SELECT
 -- SQL Server, Postgre, Oracle, mySQL
 
