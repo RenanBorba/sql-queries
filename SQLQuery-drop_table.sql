@@ -1,0 +1,8 @@
+DROP TABLE Person.Address
+
+DROP TABLE ErrorLog
+
+-- APAGAR APENAS CONTEÚDO DA TABELA
+TRUNCATE TABLE Person.Password
+
+SELECT * FROM Person.Password

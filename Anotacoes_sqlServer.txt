@@ -1,0 +1,485 @@
+Curso: https://www.youtube.com/watch?v=G7bMwefn8RQ
+
+-- SELECT
+-- SQL Server, Postgre, Oracle, mySQL
+
+
+Selecionar colunas da tabela:
+
+SELECT coluna1,coluna2
+FROM tabela
+
+Selecionar tudo da tabela: 
+
+SELECT * 
+FROM tabela
+
+---------------------------------------------------------------------------
+
+-- DISTINCT
+
+Não retorna dados duplicados:
+
+SELECT DISTINCT coluna1,coluna2
+FROM Tabela
+
+---------------------------------------------------------------------------
+
+-- WHERE
+
+Selecionar, Onde?
+
+SELECT coluna1,coluna2,coluna_n
+FROM tabela
+WHERE condicao
+
+
+OPERADOR - DESCRIÇÃO
+=          IGUAL
+>          MAIOR QUE
+<          MENOR QUE
+>=         MAIOR QUE OU IGUAL
+<=         MENOR QUE OU IGUAL
+<>         DIFERENTE DESCRIÇÃO
+AND        OPERADOR LÓGICO "E"
+OR         OPERADOR LÓGICO "OU"
+
+---------------------------------------------------------------------------
+
+-- COUNT
+
+SELECT COUNT(*)
+FROM tabela
+
+EX.: Contagem de todas as colunas da tabela:
+
+SELECT COUNT(DISTINCT coluna1)
+FROM tabela
+
+---------------------------------------------------------------------------
+
+-- TOP
+
+Limitar entradas - Selecionar primeiras linhas:
+
+SELECT TOP 10 *
+FROM Tabela
+
+---------------------------------------------------------------------------
+
+-- ORDER BY
+
+Ordenar asc/desc:
+
+SELECT coluna1, coluna2
+FROM tabela
+ORDER BY coluna1 asc/desc
+
+---------------------------------------------------------------------------
+
+-- BETWEEN
+
+É usado para encontrar valor entre um valor mínimo e máximo:
+BETWEEN = entre
+
+EX.: valor BETWEEN mínimo AND máximo
+ é a mesma coisa que dizer: 
+  valor >= mínimo AND valor <= máximo
+  
+---------------------------------------------------------------------------
+
+-- IN
+
+Usamos o operador IN junto com o WHERE, 
+ para verificar se um valor corresponde com 
+  qualquer valor passado na lista de valores
+  
+EX.:
+ valor IN (valor1,valor2)
+ color IN ('BLUE','BLACK')
+ valor IN (SELECT valor FROM nomeDaTabela) => sub select/sub query
+ 
+---------------------------------------------------------------------------
+
+-- LIKE
+
+EX.: Vamos dizer que você quer encontrar uma pessoa no banco de dados
+que você sabe que o nome dela era ovi...alguma coisa
+
+SELECT *
+FROM Person.person
+WHERE FirstName like 'ovi%'
+
+---------------------------------------------------------------------------
+
+-- MIN, MAX, SUM, AVG
+
+** avg = média 
+
+Funções de agregação basicamente agregam 
+ ou combinam dados de uma tabela em 1 resultado só 
+ 
+---------------------------------------------------------------------------
+
+-- 	GROUP BY
+
+Divide o resultado da sua pesquisa em grupos
+ Para cada grupo você pode aplicar uma função de agregação (sub-query):
+  calcular a soma de itens
+  contar o número de itens naquele grupo
+  
+EX.: SELECT coluna1,funcaoAgregacao(coluna2)
+FROM nomeTabela
+GROUP BY coluna1;
+
+---------------------------------------------------------------------------
+
+-- HAVING 
+
+É basicamente muito usado em junção com o GROUP BY para filtrar resultados de um agrupamento
+ Simplificando: É basicamente um WHERE p/ dados agrupados
+
+SELECT coluna1, funcaoAgregacao(coluna2)
+FROM nomeTabela
+GROUP BY coluna1
+HAVING condicao;
+
+ A grande diferença entre o HAVING e WHERE
+  é que o GROUP BY é aplicado é depois que os dados já foram agrupados,
+  enquanto o WHERE é aplicado antes dos dados serem agrupados
+
+---------------------------------------------------------------------------
+
+--  AS
+
+Renomear as colunas = Alias
+
+---------------------------------------------------------------------------
+ 
+-- JOINS: 
+
+-- INNER JOIN
+	Retorna apenas os resultados que correspondem (existem) tanto na tabela A como na B
+
+SELECT C.ClienteId, C.Nome, E.Rua, E.Cidade
+FROM Cliente C
+INNER JOIN Endereco E 
+ON E.EnderecoId = C.EnderecoId
+
+--|2| Bruno | Rua Norte | São Paulo|
+
+---------------------------------------------------------------------------
+
+-- FULL OUTER JOIN 
+	Retorna um conjunto de todos registros correspondes da TabelaA e TabelaB quando são iguais.
+		E, além disso se não houver valores correspondentes, ele simplesmente irá prencher esse lado com "null"
+		
+SELECT * FROM TabelaA
+FULL OUTER JOIN TabelaB
+ON TabelaA.Nome = TabelaB.Nome	
+
+---------------------------------------------------------------------------
+
+-- LEFT OUTER JOIN (E RIGHT OUTER JOIN) -> OU, SIMPLESMENTE, LEFT JOIN (E RIGHT JOIN)
+	Retorna um conjunto de todos os registros da TabelaA, e além disso, os registros correspondentes (quando disponíveis)
+		na TabelaB. Se não houver registros correspondentes, ele simplesmente vai preencher com "null"
+		
+SELECT * FROM TabelaA
+LEFT JOIN TabelaB
+ON TabelaA.Nome = TabelaB.Nome
+
+---------------------------------------------------------------------------
+ 
+-- UNION
+	O operador union combina dois ou mais resultados de um select em um resultado apenas
+
+SELECT coluna1, coluna2
+FROM tabela1
+UNION
+SELECT coluna1, coluna2
+FROM tabela2
+
+SELECT coluna1, coluna2
+FROM tabela1
+UNION ALL -> unifica também os resultados duplicados
+SELECT coluna1, coluna2
+FROM tabela2
+
+---------------------------------------------------------------------------
+
+-- SELF JOIN
+	Comparar dentro da mesma tabela
+
+SELECT NOME_COLUNA
+FROM TABELAA, TABELA BETWEEN
+WHERE CONDIÇÃO
+
+---------------------------------------------------------------------------
+
+-- SUBQUERY
+	SUBSELECT -> comando "select" dentro de outro "select"
+	
+---------------------------------------------------------------------------
+
+-- DATEPART
+	Particionar a data na pesquisa 
+	DATEPART(YEAR, A.HireDate) -> particionar a data em apenas ano na pesquisa 
+	
+---------------------------------------------------------------------------
+
+-- MANIPULAÇÃO DE OPERAÇÕES EM STRING
+
+-- CONCAT -> CONCATENAR (juntar) colunas 
+
+-- UPPER -> Texto da coluna em 'CAIXA ALTA'
+-- LOWER -> Texto da coluna em 'caixa baixa'
+-- LEN -> Contagem de caracteres
+-- SUBSTRING -> Extrair um pedaço dentro de um string
+-- REPLACE -> Substituir a string 
+
+---------------------------------------------------------------------------
+
+-- FUNÇÕES MATÉMÁTICAS SQL SERVER
+
+SELECT UnitPrice + LineTotal
+FROM Sales.SalesOrderDetail
+
+SELECT UnitPrice - LineTotal
+FROM Sales.SalesOrderDetail
+
+SELECT UnitPrice * LineTotal
+FROM Sales.SalesOrderDetail
+
+SELECT UnitPrice / LineTotal
+FROM Sales.SalesOrderDetail
+
+-- ARREDONDAMENTO COM PRECISÃO DECIMAL 2
+SELECT ROUND(LineTotal,2)
+FROM Sales.SalesOrderDetail
+
+SELECT ROUND(LineTotal,2) AS ARREDONDAMENTO, LineTotal
+FROM Sales.SalesOrderDetail
+
+-- RAÍZ QUADRADA
+SELECT SQRT(LineTotal)
+FROM Sales.SalesOrderDetail
+
+---------------------------------------------------------------------------
+
+-- TIPOS DE DADOS
+	1. Boleanos
+	2. Caracteres
+	3. Números
+	4. Temporais
+	
+	1. Boleanos
+		Por padrão ele é inicializado como nulo, e pode receber tanto 1 ou 0
+			BIT
+	
+	2. Caracteres
+		Tamanho fixo - char // permite inserir até uma quantidade fixa de caracteres e sempre ocupa
+			todo o espaço alocado de memória reservado 10/50
+		Tamanhos variáveis - varchar ou nvarchar // permite inserir até uma quantidade que for definida, 
+			porém só usa o espaço que for preenchido 10/50
+		
+	3. Números	
+		Valores exatos
+			1. TINYINT - não tem parte valor fracionados (ex: 1.43, 24.23), somente 1, 123123, 313123...
+			2. SMALLINT - mesma coisa, porém com limite maior
+			3. INT - mesma coisa, porém com limite maior
+			4. BIGINT - mesma coisa, porém com limite maior
+			5. NUMERIC ou DECIMAL - valores exatos, porém permite ter parte fracionados, que também pode ser	
+				especificado a precisão e escala (escala é o número de dígitos na parte fracional) 
+					ex: NUMERIC (5,2) 113,44 -> 5 números e 2 casas decimais
+	
+		Valores aproximados
+			1. REAL - Tem precisão aproximada de até 15 dígitos (após a vírgula ',')
+			2. FLOAT - Mesmo conceito de REAL. Se 'n' for especificado, deve ser um valor entre 1 e 53. O valor padrão de 'n' é 53
+				n valor	Precisão	Tamanho do armazenamento
+				1-24	7 dígitos	4 bytes
+				25-53	15 dígitos	8 bytes
+		
+	4. Temporais
+		DATE - armazena data no formato aaaa/mm/dd
+		DATETIME - armazena data e hora no formato aaaa/mm/dd:hh:mm:ss
+		DATETIME2 - armazena data e hora com adição de milissegundos no formato aaaa/mm/dd:hh:mm:sssssss
+		SMALLDATETIME - data e hora respeitando o limite entre '1900-01-01:00:00:00' até '2079-06-06:23:59:59'
+		TIME - apenas hora, minutos, segundos e milissegundos respeitando o limite de '00:00:00.0000000' to '23:59:59.9999999'
+		DATETIMEOFFSET - permite armazenar informações de data e hora incluindo o fuso horário
+		
+---------------------------------------------------------------------------
+
+-- CHAVE PRIMÁRIA (PRIMARY KEY)
+
+	* Uma chave primária é basicamente uma coluna ou grupo de colunas, usado para identificar 
+		unicamente uma linha em uma tabela
+	* Você consegue criar essas chaves primárias através de restrições (ou constraints em inglês),
+		que são regras que você define quando está criando uma coluna
+	* Assim fazendo isso você está criando um índice único para aquela coluna ou grupo de colunas
+	
+CREATE TABLE nome_Tabela (
+	nomeColuna tipoDeDados PRIMARY KEY
+	nomeColuna tipoDeDados ...
+)
+
+-- CHAVE ESTRANGEIRA (FOREIGN KEY)
+
+	* Uma chave estrangeira é uma coluna ou grupo de colunas em uma tabela que identifica unicamente
+		uma linha em outra tabela
+	* ou seja, uma chave estrangeira é definida em uma tabela onde ela é apenas uma referência 
+		e não contém todos os dados ali
+	* então uma chave estrangeira é simplesmente uma coluna ou grupo de colunas que é uma chave primária em outra tabela
+	* A tabela que contém a chave estrangeira é chamada de tabela referenciadora ou tabela filho.
+		E a tabela na qual a chave estrangeira é referenciada é chamada de tabela referenciada ou tabela pai
+	* Uma tabela pode ter mais de uma chave estrangeira dependendo do seu relacionamento com outras tabelas
+	* No SQL Server você define uma chave estrangeira através de um "Foreign Key Constraint" ou Restrição de Chave Estrangeira
+	* Uma Restrição de Chave Estrangeira indica que os valores em uma coluna ou grupo de colunas na tabela filho correspondem aos valores na tabela pai
+	* Nós podemos entender que uma chave estrangeira mantém a "integridade referencial"
+	
+---------------------------------------------------------------------------
+
+-- CREATE TABLE
+
+CREATE TABLE nomeTabela (
+	coluna1 tipo restricaoDaColuna
+	coluna2 tipo,
+	coluna3 tipo,
+	...
+);
+
+	* Principais tipos de restrições que podem ser aplicadas:
+		NOT NULL - Não permite nulos
+		UNIQUE - Força que todos os valores em uma coluna sejam diferentes
+		PRIMARY KEY - Uma junção de NOT NULL e UNIQUE
+		FOREIGN KEY - Identifica unicamente uma linha em outra tabela
+		CHECK - Força uma condição específica em uma coluna
+		DEFAULT - Força um valor padrão quando nenhum valor é passado
+
+---------------------------------------------------------------------------
+
+-- INSERT INTO 
+
+INSERT INTO nomeTabela(coluna1, coluna2, ...)
+VALUES(valor1, valor2, ...)
+
+INSERT INTO nomeTabela(coluna1, coluna2)
+VALUES(valor1, valor2)
+VALUES(valor1, valor2)
+VALUES(valor1, valor2)
+
+INSERT INTO nomeTabela(coluna1, coluna2)
+VALUES
+(valor1, valor2),
+(valor1, valor2),
+(valor1, valor2);
+
+INSERT INTO Tabela1(coluna1)
+SELECT coluna2
+FROM TabelaB
+
+SELECT * INTO Tabela4
+FROM Tabela3
+
+---------------------------------------------------------------------------
+
+-- UPDATE
+
+UPDATE nomeTabela
+SET coluna1 = valor1
+	coluna2 = valor2
+WHERE condicao
+
+---------------------------------------------------------------------------
+
+-- DELETE
+
+DELETE FROM nomeTabela
+WHERE condicao
+
+---------------------------------------------------------------------------
+
+-- ALTER TABLE
+	Alterar a estrutura de uma tabela
+
+ALTER TABLE nomeDaTabela
+ACAO
+
+-- Exemplos do que pode ser feito:
+- Add, Remover ou Alterar uma coluna
+- Set Valores padrões para uma coluna
+- Add ou Remover restrições de colunas
+- Renomear uma tabela
+
+---------------------------------------------------------------------------
+
+-- DROP TABLE
+	Dropar (excluir)
+	
+DROP TABLE nomeDaTabela
+
+-- APAGAR APENAS CONTEÚDO DA TABELA
+TRUNCATE TABLE nomeDaTabela
+
+---------------------------------------------------------------------------
+
+-- CHECK CONSTRAINT 
+	Criar restrições de valores que podem ser inseridos em uma coluna de uma tabela em banco de dados 
+		quando você está criando uma tabela nova
+		
+CREATE TABLE CarteiraMotorista (
+	id INT NOT NULL,
+	nome VARCHAR(255) NOT NULL,
+	idade INT CHECK (idade >= 18)
+)
+
+---------------------------------------------------------------------------
+
+-- NOT NULL CONSTRAINT
+	Criar restrições que forcem com que não seja possível inserir dados em uma tabela 
+		sem preencher a coluna marcada como NOT NULL
+
+CREATE TABLE CarteiraMotorista (
+	id INT NOT NULL,
+	nome VARCHAR(255) NOT NULL,
+);
+
+---------------------------------------------------------------------------
+
+-- UNIQUE CONSTRAINT
+	Criar colunas únicas, porém diferente de uma primary key, pode existir 
+		várias colunas com restrição UNIQUE
+	
+CREATE TABLE CarteiraMotorista (
+	id int NOT NULL,
+	nome VARCHAR(255) NOT NULL,
+	idade INT CHECK (idade >= 18),
+	codigoCNH INT NOT NULL UNIQUE
+);
+
+---------------------------------------------------------------------------
+
+-- IDENTITY 
+	Utilizada para atributos (campos/colunas) das tabelas nas funções CREATE TABLE e ALTER TABLE, 
+		e tem como finalidade incrementar um valor a cada nova inserção
+	
+IDENTITY [ (início , incremento ) ]
+
+Codigo é a chave primária e tendo seu primeiro valor válido igual a 1 e se auto incrementando de 1 em 1, ou seja, 
+	primeiro registro igual a 1, o segundo igual a 2 e assim por diante
+
+CREATE TABLE Tbl_Clientes (
+	Codigo INT IDENTITY (1,1) PRIMARY KEY,
+	Nome VARCHAR (100),
+	UF VARCHAR (2)
+);
+
+---------------------------------------------------------------------------
+
+-- VIEWS 
+	Tabelas criadas para consulta, onde você usa outras tabelas como base 
+		para criar uma nova tabela de pesquisa com apenas dados específicos que você precisa de uma tabela
+	
+CREATE VIEW [Pessoas Simplificado] AS
+SELECT FirstName, MiddleName, LastName
+FROM Person.Person
+WHERE Title = 'Ms.'
